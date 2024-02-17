@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Packaging Orders</title>
+<style>
+    label{
+        color: blueviolet;
+    }
+    input{
+        color:rgb(225, 65, 65);
+    }
+    th, td {
+  text-align:center;
+  padding: 8px;
+}
+th {
+  background-color: #aa4c04;
+  color: white;
+}
+tr:nth-child(even) { 
+            background-color: rgba(255, 166, 0, 0.707); 
+        } 
+tr:nth-child(odd) { 
+        background-color: Lightgreen; 
+        }         
+</style>
+</head>
+<body >
+  <br>
+  <br>
+  <br>
+
+  <label for="quantity">Minimum Quantity</label>
+  <input type="number" id="minquantity" name="minquantity"><br><br>
+  <label for="quantity">Maximum Quantity</label>
+  <input type="number" id="maxquantity" name="maxquantity"><br><br>
+  <input type="button" onclick="filterTheOrders()" value="Enter the Quantity to filter and then click here !">
+  <br><br>
+  
+  <table>
+
+  </table>
+
+  <script>
+    
+    const orders = [
+  {
+    OrderLineID: 14,
+    OrderID: 5,
+    StockItemID: 128,
+    Description: "Plush shark slippers (Gray) L",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 28,
+    OrderID: 8,
+    StockItemID: 32,
+    Description: "Developer joke mug - that's a hardware problem (White)",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 42,
+    OrderID: 54,
+    StockItemID: 181,
+    Description: "Shipping carton (Brown) 356x229x229mm",
+    PackageTypeID: 14,
+    Quantity: 75,
+    UnitPrice: 1.14
+  },
+  {
+    OrderLineID: 56,
+    OrderID: 15,
+    StockItemID: 210,
+    Description: "Packing knife with metal insert blade (Yellow) 18mm",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 2.4
+  },
+  {
+    OrderLineID: 70,
+    OrderID: 19,
+    StockItemID: 22,
+    Description: "DBA joke mug - it depends (White)",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 84,
+    OrderID: 24,
+    StockItemID: 128,
+    Description: "Plush shark slippers (Gray) L",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 112,
+    OrderID: 33,
+    StockItemID: 60,
+    Description: "RC toy sedan car with remote control (Blue) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 126,
+    OrderID: 72,
+    StockItemID: 197,
+    Description: "Black and orange this way up despatch tape 48mmx75m",
+    PackageTypeID: 14,
+    Quantity: 96,
+    UnitPrice: 3.7
+  },
+  {
+    OrderLineID: 140,
+    OrderID: 75,
+    StockItemID: 147,
+    Description: "Halloween skull mask (Gray) M",
+    PackageTypeID: 14,
+    Quantity: 60,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 154,
+    OrderID: 78,
+    StockItemID: 166,
+    Description: "10 mm Anti static bubble wrap (Blue) 20m",
+    PackageTypeID: 14,
+    Quantity: 90,
+    UnitPrice: 42
+  },
+  {
+    OrderLineID: 168,
+    OrderID: 83,
+    StockItemID: 172,
+    Description: "32 mm Anti static bubble wrap (Blue) 20m",
+    PackageTypeID: 14,
+    Quantity: 100,
+    UnitPrice: 48
+  },
+  {
+    OrderLineID: 182,
+    OrderID: 88,
+    StockItemID: 126,
+    Description: "Plush shark slippers (Gray) S",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 196,
+    OrderID: 92,
+    StockItemID: 63,
+    Description: "RC toy sedan car with remote control (Pink) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 210,
+    OrderID: 96,
+    StockItemID: 16,
+    Description: "DBA joke mug - mind if I join you? (White)",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 224,
+    OrderID: 138,
+    StockItemID: 97,
+    Description: "The Gured shirt XML tag t-shirt (Black) 3XL",
+    PackageTypeID: 14,
+    Quantity: 96,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 238,
+    OrderID: 104,
+    StockItemID: 29,
+    Description: "DBA joke mug - two types of DBAs (Black)",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 294,
+    OrderID: 149,
+    StockItemID: 188,
+    Description: "3 kg Courier post bag (White) 300x190x95mm",
+    PackageTypeID: 14,
+    Quantity: 175,
+    UnitPrice: 0.66
+  },
+  {
+    OrderLineID: 308,
+    OrderID: 124,
+    StockItemID: 133,
+    Description: "Furry gorilla with big eyes slippers (Black) XL",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 322,
+    OrderID: 127,
+    StockItemID: 152,
+    Description: "Pack of 12 action figures (female)",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 16
+  },
+  {
+    OrderLineID: 336,
+    OrderID: 154,
+    StockItemID: 137,
+    Description: "Animal with big feet slippers (Brown) XL",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 350,
+    OrderID: 159,
+    StockItemID: 56,
+    Description: "IT joke mug - hardware: part of the computer that can be kicked (White)",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 364,
+    OrderID: 163,
+    StockItemID: 129,
+    Description: "Plush shark slippers (Gray) XL",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 378,
+    OrderID: 167,
+    StockItemID: 30,
+    Description: "Developer joke mug - Oct 31 = Dec 25 (White)",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 392,
+    OrderID: 170,
+    StockItemID: 176,
+    Description: "Bubblewrap dispenser (Red) 1.5m",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 240
+  },
+  {
+    OrderLineID: 406,
+    OrderID: 173,
+    StockItemID: 44,
+    Description: "Developer joke mug - there are 10 types of people in the world (White)",
+    PackageTypeID: 14,
+    Quantity: 6,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 420,
+    OrderID: 177,
+    StockItemID: 13,
+    Description: "USB food flash drive - shrimp cocktail",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 434,
+    OrderID: 181,
+    StockItemID: 126,
+    Description: "Plush shark slippers (Gray) S",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 448,
+    OrderID: 184,
+    StockItemID: 30,
+    Description: "Developer joke mug - Oct 31 = Dec 25 (White)",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 462,
+    OrderID: 189,
+    StockItemID: 197,
+    Description: "Black and orange this way up despatch tape 48mmx75m",
+    PackageTypeID: 14,
+    Quantity: 240,
+    UnitPrice: 3.7
+  },
+  {
+    OrderLineID: 476,
+    OrderID: 192,
+    StockItemID: 24,
+    Description: "DBA joke mug - I will get you in order (White)",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 490,
+    OrderID: 197,
+    StockItemID: 164,
+    Description: "32 mm Double sided bubble wrap 50m",
+    PackageTypeID: 14,
+    Quantity: 70,
+    UnitPrice: 112
+  },
+  {
+    OrderLineID: 504,
+    OrderID: 201,
+    StockItemID: 132,
+    Description: "Furry gorilla with big eyes slippers (Black) L",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 518,
+    OrderID: 204,
+    StockItemID: 5,
+    Description: "USB food flash drive - hamburger",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 532,
+    OrderID: 208,
+    StockItemID: 191,
+    Description: "Black and orange fragile despatch tape 48mmx75m",
+    PackageTypeID: 14,
+    Quantity: 180,
+    UnitPrice: 3.7
+  },
+  {
+    OrderLineID: 546,
+    OrderID: 236,
+    StockItemID: 114,
+    Description: "Superhero action jacket (Blue) XXL",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 30
+  },
+  {
+    OrderLineID: 560,
+    OrderID: 272,
+    StockItemID: 157,
+    Description: "10 mm Double sided bubble wrap 20m",
+    PackageTypeID: 14,
+    Quantity: 40,
+    UnitPrice: 30
+  },
+  {
+    OrderLineID: 574,
+    OrderID: 243,
+    StockItemID: 217,
+    Description: "Void fill 200 L bag (White) 200L",
+    PackageTypeID: 14,
+    Quantity: 20,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 588,
+    OrderID: 274,
+    StockItemID: 145,
+    Description: "Halloween zombie mask (Light Brown) XL",
+    PackageTypeID: 14,
+    Quantity: 96,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 602,
+    OrderID: 251,
+    StockItemID: 54,
+    Description: "IT joke mug - that behavior is by design (White)",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 616,
+    OrderID: 254,
+    StockItemID: 185,
+    Description: "Shipping carton (Brown) 356x356x279mm",
+    PackageTypeID: 14,
+    Quantity: 150,
+    UnitPrice: 2.04
+  },
+  {
+    OrderLineID: 630,
+    OrderID: 258,
+    StockItemID: 73,
+    Description: "Ride on vintage American toy coupe (Red) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 6,
+    UnitPrice: 285
+  },
+  {
+    OrderLineID: 644,
+    OrderID: 262,
+    StockItemID: 23,
+    Description: "DBA joke mug - it depends (Black)",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 658,
+    OrderID: 267,
+    StockItemID: 130,
+    Description: "Furry gorilla with big eyes slippers (Black) S",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 672,
+    OrderID: 280,
+    StockItemID: 121,
+    Description: "Dinosaur battery-powered slippers (Green) XL",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 686,
+    OrderID: 320,
+    StockItemID: 161,
+    Description: "20 mm Double sided bubble wrap 50m",
+    PackageTypeID: 14,
+    Quantity: 80,
+    UnitPrice: 108
+  },
+  {
+    OrderLineID: 700,
+    OrderID: 288,
+    StockItemID: 40,
+    Description: "Developer joke mug - (hip, hip, array) (White)",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 714,
+    OrderID: 294,
+    StockItemID: 33,
+    Description: "Developer joke mug - that's a hardware problem (Black)",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 728,
+    OrderID: 323,
+    StockItemID: 192,
+    Description: "Black and orange fragile despatch tape 48mmx100m",
+    PackageTypeID: 14,
+    Quantity: 288,
+    UnitPrice: 4.1
+  },
+  {
+    OrderLineID: 742,
+    OrderID: 303,
+    StockItemID: 28,
+    Description: "DBA joke mug - two types of DBAs (White)",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 756,
+    OrderID: 308,
+    StockItemID: 39,
+    Description: "Developer joke mug - inheritance is the OO way to become wealthy (Black)",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 770,
+    OrderID: 313,
+    StockItemID: 211,
+    Description: "Small 9mm replacement blades 9mm",
+    PackageTypeID: 14,
+    Quantity: 40,
+    UnitPrice: 4.1
+  },
+  {
+    OrderLineID: 784,
+    OrderID: 316,
+    StockItemID: 167,
+    Description: "10 mm Anti static bubble wrap (Blue) 50m",
+    PackageTypeID: 14,
+    Quantity: 40,
+    UnitPrice: 99
+  },
+  {
+    OrderLineID: 798,
+    OrderID: 330,
+    StockItemID: 155,
+    Description: "Large sized bubblewrap roll 50m",
+    PackageTypeID: 14,
+    Quantity: 100,
+    UnitPrice: 24
+  },
+  {
+    OrderLineID: 812,
+    OrderID: 335,
+    StockItemID: 58,
+    Description: "RC toy sedan car with remote control (Black) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 826,
+    OrderID: 339,
+    StockItemID: 97,
+    Description: "The Gured shirt XML tag t-shirt (Black) 3XL",
+    PackageTypeID: 14,
+    Quantity: 24,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 840,
+    OrderID: 342,
+    StockItemID: 38,
+    Description: "Developer joke mug - inheritance is the OO way to become wealthy (White)",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 854,
+    OrderID: 345,
+    StockItemID: 41,
+    Description: "Developer joke mug - (hip, hip, array) (Black)",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 938,
+    OrderID: 368,
+    StockItemID: 115,
+    Description: "Superhero action jacket (Blue) 3XL",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 34
+  },
+  {
+    OrderLineID: 952,
+    OrderID: 372,
+    StockItemID: 117,
+    Description: "Superhero action jacket (Blue) 5XL",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 34
+  },
+  {
+    OrderLineID: 966,
+    OrderID: 376,
+    StockItemID: 124,
+    Description: "Ogre battery-powered slippers (Green) L",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 980,
+    OrderID: 380,
+    StockItemID: 54,
+    Description: "IT joke mug - that behavior is by design (White)",
+    PackageTypeID: 14,
+    Quantity: 6,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 994,
+    OrderID: 383,
+    StockItemID: 72,
+    Description: "Ride on toy sedan car (Pink) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 230
+  },
+  {
+    OrderLineID: 1008,
+    OrderID: 389,
+    StockItemID: 155,
+    Description: "Large sized bubblewrap roll 50m",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 24
+  },
+  {
+    OrderLineID: 1022,
+    OrderID: 393,
+    StockItemID: 112,
+    Description: "Superhero action jacket (Blue) L",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 30
+  },
+  {
+    OrderLineID: 1036,
+    OrderID: 397,
+    StockItemID: 123,
+    Description: "Ogre battery-powered slippers (Green) M",
+    PackageTypeID: 14,
+    Quantity: 6,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 1050,
+    OrderID: 402,
+    StockItemID: 44,
+    Description: "Developer joke mug - there are 10 types of people in the world (White)",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1064,
+    OrderID: 407,
+    StockItemID: 156,
+    Description: "10 mm Double sided bubble wrap 10m",
+    PackageTypeID: 14,
+    Quantity: 40,
+    UnitPrice: 15
+  },
+  {
+    OrderLineID: 1078,
+    OrderID: 410,
+    StockItemID: 186,
+    Description: "Shipping carton (Brown) 457x457x457mm",
+    PackageTypeID: 14,
+    Quantity: 225,
+    UnitPrice: 2.1
+  },
+  {
+    OrderLineID: 1092,
+    OrderID: 413,
+    StockItemID: 22,
+    Description: "DBA joke mug - it depends (White)",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1106,
+    OrderID: 417,
+    StockItemID: 16,
+    Description: "DBA joke mug - mind if I join you? (White)",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1120,
+    OrderID: 429,
+    StockItemID: 21,
+    Description: "DBA joke mug - you might be a DBA if (Black)",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1134,
+    OrderID: 432,
+    StockItemID: 130,
+    Description: "Furry gorilla with big eyes slippers (Black) S",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 1148,
+    OrderID: 435,
+    StockItemID: 189,
+    Description: "Clear packaging tape 48mmx75m",
+    PackageTypeID: 14,
+    Quantity: 208,
+    UnitPrice: 2.9
+  },
+  {
+    OrderLineID: 1162,
+    OrderID: 438,
+    StockItemID: 97,
+    Description: "The Gured shirt XML tag t-shirt (Black) 3XL",
+    PackageTypeID: 14,
+    Quantity: 48,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 1176,
+    OrderID: 442,
+    StockItemID: 197,
+    Description: "Black and orange this way up despatch tape 48mmx75m",
+    PackageTypeID: 14,
+    Quantity: 48,
+    UnitPrice: 3.7
+  },
+  {
+    OrderLineID: 1190,
+    OrderID: 447,
+    StockItemID: 109,
+    Description: "Superhero action jacket (Blue) XS",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 1204,
+    OrderID: 451,
+    StockItemID: 17,
+    Description: "DBA joke mug - mind if I join you? (Black)",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1218,
+    OrderID: 454,
+    StockItemID: 65,
+    Description: "RC vintage American toy coupe with remote control (Black) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 30
+  },
+  {
+    OrderLineID: 1232,
+    OrderID: 459,
+    StockItemID: 72,
+    Description: "Ride on toy sedan car (Pink) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 230
+  },
+  {
+    OrderLineID: 1246,
+    OrderID: 462,
+    StockItemID: 68,
+    Description: "Ride on toy sedan car (Red) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 230
+  },
+  {
+    OrderLineID: 1260,
+    OrderID: 466,
+    StockItemID: 62,
+    Description: "RC toy sedan car with remote control (Yellow) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 1274,
+    OrderID: 470,
+    StockItemID: 49,
+    Description: "Developer joke mug - this code was generated by a tool (Black)",
+    PackageTypeID: 14,
+    Quantity: 6,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1288,
+    OrderID: 473,
+    StockItemID: 127,
+    Description: "Plush shark slippers (Gray) M",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 1302,
+    OrderID: 478,
+    StockItemID: 38,
+    Description: "Developer joke mug - inheritance is the OO way to become wealthy (White)",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1316,
+    OrderID: 481,
+    StockItemID: 6,
+    Description: "USB food flash drive - hot dog",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 1330,
+    OrderID: 486,
+    StockItemID: 14,
+    Description: "USB food flash drive - fortune cookie",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 1344,
+    OrderID: 488,
+    StockItemID: 113,
+    Description: "Superhero action jacket (Blue) XL",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 30
+  },
+  {
+    OrderLineID: 1358,
+    OrderID: 492,
+    StockItemID: 45,
+    Description: "Developer joke mug - there are 10 types of people in the world (Black)",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 13
+  },  {
+    OrderLineID: 1862,
+    OrderID: 641,
+    StockItemID: 15,
+    Description: "USB food flash drive - dessert 10 drive variety pack",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 240
+  },
+  {
+    OrderLineID: 1876,
+    OrderID: 645,
+    StockItemID: 49,
+    Description: "Developer joke mug - this code was generated by a tool (Black)",
+    PackageTypeID: 14,
+    Quantity: 6,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1890,
+    OrderID: 648,
+    StockItemID: 25,
+    Description: "DBA joke mug - I will get you in order (Black)",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1904,
+    OrderID: 651,
+    StockItemID: 23,
+    Description: "DBA joke mug - it depends (Black)",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1918,
+    OrderID: 655,
+    StockItemID: 39,
+    Description: "Developer joke mug - inheritance is the OO way to become wealthy (Black)",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 1932,
+    OrderID: 659,
+    StockItemID: 203,
+    Description: "Tape dispenser (Black)",
+    PackageTypeID: 14,
+    Quantity: 50,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 1946,
+    OrderID: 662,
+    StockItemID: 113,
+    Description: "Superhero action jacket (Blue) XL",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 30
+  },
+  {
+    OrderLineID: 1960,
+    OrderID: 671,
+    StockItemID: 71,
+    Description: "Ride on toy sedan car (Yellow) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 230
+  },
+  {
+    OrderLineID: 1974,
+    OrderID: 674,
+    StockItemID: 74,
+    Description: "Ride on vintage American toy coupe (Black) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 285
+  },
+  {
+    OrderLineID: 1988,
+    OrderID: 678,
+    StockItemID: 115,
+    Description: "Superhero action jacket (Blue) 3XL",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 34
+  },
+  {
+    OrderLineID: 2002,
+    OrderID: 682,
+    StockItemID: 168,
+    Description: "20 mm Anti static bubble wrap (Blue) 10m",
+    PackageTypeID: 14,
+    Quantity: 70,
+    UnitPrice: 29
+  },
+  {
+    OrderLineID: 2016,
+    OrderID: 687,
+    StockItemID: 69,
+    Description: "Ride on toy sedan car (Blue) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 230
+  },
+  {
+    OrderLineID: 2030,
+    OrderID: 691,
+    StockItemID: 75,
+    Description: "Ride on big wheel monster truck (Black) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 345
+  },
+  {
+    OrderLineID: 2044,
+    OrderID: 699,
+    StockItemID: 208,
+    Description: "Permanent marker red 5mm nib (Red) 5mm",
+    PackageTypeID: 14,
+    Quantity: 48,
+    UnitPrice: 2.7
+  },
+  {
+    OrderLineID: 2058,
+    OrderID: 703,
+    StockItemID: 145,
+    Description: "Halloween zombie mask (Light Brown) XL",
+    PackageTypeID: 14,
+    Quantity: 84,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 2072,
+    OrderID: 708,
+    StockItemID: 115,
+    Description: "Superhero action jacket (Blue) 3XL",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 34
+  },
+  {
+    OrderLineID: 2086,
+    OrderID: 712,
+    StockItemID: 107,
+    Description: "Superhero action jacket (Blue) 3XS",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 2100,
+    OrderID: 716,
+    StockItemID: 5,
+    Description: "USB food flash drive - hamburger",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 2114,
+    OrderID: 719,
+    StockItemID: 205,
+    Description: "Tape dispenser (Blue)",
+    PackageTypeID: 14,
+    Quantity: 100,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 2128,
+    OrderID: 722,
+    StockItemID: 145,
+    Description: "Halloween zombie mask (Light Brown) XL",
+    PackageTypeID: 14,
+    Quantity: 24,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 2142,
+    OrderID: 725,
+    StockItemID: 22,
+    Description: "DBA joke mug - it depends (White)",
+    PackageTypeID: 14,
+    Quantity: 6,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 2156,
+    OrderID: 730,
+    StockItemID: 56,
+    Description: "IT joke mug - hardware: part of the computer that can be kicked (White)",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 2170,
+    OrderID: 734,
+    StockItemID: 66,
+    Description: "RC big wheel monster truck with remote control (Black) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 45
+  },
+  {
+    OrderLineID: 2184,
+    OrderID: 737,
+    StockItemID: 144,
+    Description: "Halloween zombie mask (Light Brown) L",
+    PackageTypeID: 14,
+    Quantity: 36,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 2198,
+    OrderID: 741,
+    StockItemID: 60,
+    Description: "RC toy sedan car with remote control (Blue) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 2212,
+    OrderID: 745,
+    StockItemID: 163,
+    Description: "32 mm Double sided bubble wrap 20m",
+    PackageTypeID: 14,
+    Quantity: 50,
+    UnitPrice: 37
+  },
+  {
+    OrderLineID: 2226,
+    OrderID: 749,
+    StockItemID: 175,
+    Description: "Bubblewrap dispenser (Blue) 1.5m",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 240
+  },
+  {
+    OrderLineID: 2240,
+    OrderID: 753,
+    StockItemID: 46,
+    Description: "Developer joke mug - a foo walks into a bar (White)",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 2254,
+    OrderID: 757,
+    StockItemID: 71,
+    Description: "Ride on toy sedan car (Yellow) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 230
+  },
+  {
+    OrderLineID: 2268,
+    OrderID: 760,
+    StockItemID: 133,
+    Description: "Furry gorilla with big eyes slippers (Black) XL",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 2282,
+    OrderID: 763,
+    StockItemID: 51,
+    Description: "Developer joke mug - old C developers never die (Black)",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 2296,
+    OrderID: 771,
+    StockItemID: 48,
+    Description: "Developer joke mug - this code was generated by a tool (White)",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 13
+  },{
+    OrderLineID: 3024,
+    OrderID: 992,
+    StockItemID: 50,
+    Description: "Developer joke mug - old C developers never die (White)",
+    PackageTypeID: 14,
+    Quantity: 9,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3038,
+    OrderID: 996,
+    StockItemID: 18,
+    Description: "DBA joke mug - daaaaaa-ta (White)",
+    PackageTypeID: 14,
+    Quantity: 8,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3052,
+    OrderID: 1000,
+    StockItemID: 28,
+    Description: "DBA joke mug - two types of DBAs (White)",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3066,
+    OrderID: 1004,
+    StockItemID: 159,
+    Description: "20 mm Double sided bubble wrap 10m",
+    PackageTypeID: 14,
+    Quantity: 30,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 3080,
+    OrderID: 1008,
+    StockItemID: 70,
+    Description: "Ride on toy sedan car (Green) 1/12 scale",
+    PackageTypeID: 14,
+    Quantity: 1,
+    UnitPrice: 230
+  },
+  {
+    OrderLineID: 3094,
+    OrderID: 1012,
+    StockItemID: 178,
+    Description: "Shipping carton (Brown) 500x310x310mm",
+    PackageTypeID: 14,
+    Quantity: 200,
+    UnitPrice: 2.55
+  },
+  {
+    OrderLineID: 3108,
+    OrderID: 1017,
+    StockItemID: 213,
+    Description: "Air cushion film 200mmx100mm 325m",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 87
+  },
+  {
+    OrderLineID: 3122,
+    OrderID: 1021,
+    StockItemID: 141,
+    Description: "Furry animal socks (Pink) XL",
+    PackageTypeID: 14,
+    Quantity: 24,
+    UnitPrice: 5
+  },
+  {
+    OrderLineID: 3136,
+    OrderID: 1025,
+    StockItemID: 124,
+    Description: "Ogre battery-powered slippers (Green) L",
+    PackageTypeID: 14,
+    Quantity: 4,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 3150,
+    OrderID: 1030,
+    StockItemID: 50,
+    Description: "Developer joke mug - old C developers never die (White)",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3164,
+    OrderID: 1033,
+    StockItemID: 52,
+    Description: "IT joke mug - keyboard not found … press F1 to continue (White)",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3178,
+    OrderID: 1041,
+    StockItemID: 147,
+    Description: "Halloween skull mask (Gray) M",
+    PackageTypeID: 14,
+    Quantity: 36,
+    UnitPrice: 18
+  },
+  {
+    OrderLineID: 3192,
+    OrderID: 1046,
+    StockItemID: 124,
+    Description: "Ogre battery-powered slippers (Green) L",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 3206,
+    OrderID: 1050,
+    StockItemID: 16,
+    Description: "DBA joke mug - mind if I join you? (White)",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3220,
+    OrderID: 1054,
+    StockItemID: 195,
+    Description: "Black and orange handle with care despatch tape  48mmx75m",
+    PackageTypeID: 14,
+    Quantity: 120,
+    UnitPrice: 3.7
+  },
+  {
+    OrderLineID: 3234,
+    OrderID: 1058,
+    StockItemID: 121,
+    Description: "Dinosaur battery-powered slippers (Green) XL",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 3248,
+    OrderID: 1061,
+    StockItemID: 66,
+    Description: "RC big wheel monster truck with remote control (Black) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 7,
+    UnitPrice: 45
+  },
+  {
+    OrderLineID: 3262,
+    OrderID: 1067,
+    StockItemID: 107,
+    Description: "Superhero action jacket (Blue) 3XS",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 25
+  },
+  {
+    OrderLineID: 3276,
+    OrderID: 1070,
+    StockItemID: 204,
+    Description: "Tape dispenser (Red)",
+    PackageTypeID: 14,
+    Quantity: 70,
+    UnitPrice: 32
+  },
+  {
+    OrderLineID: 3290,
+    OrderID: 1074,
+    StockItemID: 201,
+    Description: "Red and white urgent despatch tape 48mmx75m",
+    PackageTypeID: 14,
+    Quantity: 24,
+    UnitPrice: 3.7
+  },
+  {
+    OrderLineID: 3304,
+    OrderID: 1077,
+    StockItemID: 52,
+    Description: "IT joke mug - keyboard not found … press F1 to continue (White)",
+    PackageTypeID: 14,
+    Quantity: 3,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3318,
+    OrderID: 1081,
+    StockItemID: 20,
+    Description: "DBA joke mug - you might be a DBA if (White)",
+    PackageTypeID: 14,
+    Quantity: 2,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3332,
+    OrderID: 1086,
+    StockItemID: 213,
+    Description: "Air cushion film 200mmx100mm 325m",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 87
+  },
+  {
+    OrderLineID: 3346,
+    OrderID: 1090,
+    StockItemID: 66,
+    Description: "RC big wheel monster truck with remote control (Black) 1/50 scale",
+    PackageTypeID: 14,
+    Quantity: 6,
+    UnitPrice: 45
+  },
+  {
+    OrderLineID: 3360,
+    OrderID: 1095,
+    StockItemID: 195,
+    Description: "Black and orange handle with care despatch tape  48mmx75m",
+    PackageTypeID: 14,
+    Quantity: 168,
+    UnitPrice: 3.7
+  },
+  {
+    OrderLineID: 3374,
+    OrderID: 1100,
+    StockItemID: 168,
+    Description: "20 mm Anti static bubble wrap (Blue) 10m",
+    PackageTypeID: 14,
+    Quantity: 100,
+    UnitPrice: 29
+  },
+  {
+    OrderLineID: 3388,
+    OrderID: 1103,
+    StockItemID: 20,
+    Description: "DBA joke mug - you might be a DBA if (White)",
+    PackageTypeID: 14,
+    Quantity: 10,
+    UnitPrice: 13
+  },
+  {
+    OrderLineID: 3402,
+    OrderID: 1107,
+    StockItemID: 27,
+    Description: "DBA joke mug - SELECT caffeine FROM mug (Black)",
+    PackageTypeID: 14,
+    Quantity: 5,
+    UnitPrice: 13
+  },
+    ];
+
+    function generateTableHead(table, data) {
+        let thead = table.createTHead();
+        let row = thead.insertRow();
+        for (let key of data) {
+          let th = document.createElement("th");
+          let text = document.createTextNode(key);
+          th.appendChild(text);
+          row.appendChild(th);
+        }
+      }
+
+      function generateTable(table, data1) {
+        for (let element of data1) {
+          let row = table.insertRow();
+          for (key in element) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(element[key]);
+            cell.appendChild(text);
+          }
+        }
+    }
+
+    function filterTheOrders(){
+      
+      const ordersFiltered = orders.filter(order => (order.Quantity >= document.getElementById("minquantity").value)
+       &&(order.Quantity <= document.getElementById("maxquantity").value) );
+      console.log(ordersFiltered);
+      let x = document.querySelectorAll("input");
+      let y = document.querySelectorAll("label");
+      for (let i = 0; i < x.length; i++){
+        x[i].remove;
+        }
+        for (let i = 0; i < y.length; i++){
+          y[i].remove;
+          }
+      for (let i = 0; i <= orders.length; i++){
+      document.querySelector("table").deleteRow(0);
+      }
+    
+    let tablef = document.querySelector("table");
+    let dataf = Object.keys(orders[0]);
+    generateTable(table, ordersFiltered);
+    generateTableHead(table, dataf);
+
+    }
+
+    const sortedOrders = orders.sort((a, b) => a.OrderLineID - b.OrderLineID);
+      //let tableOrd = document.createElement("table");
+      let table = document.querySelector("table");
+      let data = Object.keys(orders[0]);
+      generateTable(table, sortedOrders);
+      generateTableHead(table, data);
+      console.log(orders.length);
+
+      //filterTheOrders();
+
+      
+
+      
+
+
+
+
+
+    //document.getElementById("body").innerHTML = Object.values(orders[0]);
+
+    //https://www.freecodecamp.org/news/filter-arrays-in-javascript/
+    // https://www.valentinog.com/blog/html-table/
+  </script>
+</body>
+</html>
